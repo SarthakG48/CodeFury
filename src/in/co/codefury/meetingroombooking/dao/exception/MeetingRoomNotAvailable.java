@@ -1,4 +1,4 @@
-package in.co.codefury.meetingroombooking.exception;
+package in.co.codefury.meetingroombooking.dao.exception;
 
 public class MeetingRoomNotAvailable extends Exception {
     private String message;

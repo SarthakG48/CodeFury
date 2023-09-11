@@ -1,4 +1,9 @@
 package in.co.codefury.meetingroombooking.model;
+
+import java.util.Date;
+
+import com.google.gson.Gson;
+
 /**
  * User
  */
@@ -9,13 +14,23 @@ public class User {
     protected String email;
     protected String password;
     protected String phone;
+    protected Date lastLoggin;
     
+    public Date getLastLoggin() {
+        return lastLoggin;
+    }
+
+    public void setLastLoggin(Date lastLoggin) {
+        this.lastLoggin = lastLoggin;
+    }
+
     public User(int id, String name, String email, String password, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        lastLoggin = new Date();
     }
 
     public int getId() {
@@ -58,7 +73,12 @@ public class User {
         this.phone = phone;
     }
 
+   
+    public String getDataOfUser(){
+        Gson gson=new Gson();
+        return gson.toJson(this);
+        
+        //return "name: "+name+" email: "+email+" lastLoggedIn: "+lastLoggin;
+    }
 
-    
-    
 }

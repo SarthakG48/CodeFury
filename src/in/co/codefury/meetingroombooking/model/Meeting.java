@@ -5,7 +5,7 @@ import java.sql.Time;
 import java.util.Set;
 
 public class Meeting {
-    private String id;
+    private int id;
     private String title;
     private User organizer;
     private Date meetingDate;
@@ -14,7 +14,7 @@ public class Meeting {
     private Set<User> participants;
     private MeetingRoom meetingRoom;
     
-    public Meeting(String id, String title, User organizer, Date meetingDate, Time startTime, Time endTime,
+    public Meeting(int id, String title, User organizer, Date meetingDate, Time startTime, Time endTime,
             Set<User> participants, MeetingRoom meetingRoom) {
         this.id = id;
         this.title = title;
@@ -25,12 +25,14 @@ public class Meeting {
         this.participants = participants;
         this.meetingRoom = meetingRoom;
     }
+    
+   
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

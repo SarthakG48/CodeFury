@@ -1,10 +1,13 @@
 package in.co.codefury.meetingroombooking.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
 import in.co.codefury.meetingroombooking.service.Service;
+import in.co.codefury.meetingroombooking.service.exception.AccessDenied;
 import in.co.codefury.meetingroombooking.model.Admin;
+import in.co.codefury.meetingroombooking.model.Amenity;
 import in.co.codefury.meetingroombooking.model.Meeting;
 import in.co.codefury.meetingroombooking.model.MeetingRoom;
 import in.co.codefury.meetingroombooking.model.User;
@@ -20,53 +23,93 @@ public class ServiceImpl implements Service {
     @Override
     public void addUser(User u) {
 
-        try {
-            this.meetingRoomDao.save(u);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       
     }
 
     @Override
     public void printAllUsers() {
-        try {
-            this.meetingRoomDao.printAllUsers();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        
+    }
+
+    @Override
+    public MeetingRoom createMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDenied {
+        if (u instanceof Admin) {
+            return meetingRoomDao.createMeetingRoom(m);
+        } else {
+            throw new AccessDenied("Access Denied. This action is only allowed for Admins.");
         }
     }
 
     @Override
-    public MeetingRoom createMeetingRoom(User u, MeetingRoom m) throws SQLException {
+    public MeetingRoom updateMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDenied {
         if (u instanceof Admin) {
 
-            return this.meetingRoomDao.createMeetingRoom(m);
+            return meetingRoomDao.updateMeetingRoom(m);
         } else {
-            System.out.println("You are not authorized to create a meeting room");
-            return null;
+            throw new AccessDenied("Access Denied. This action is only allowed for Admins.");
         }
     }
 
     @Override
-    public MeetingRoom updateMeetingRoom(User u, MeetingRoom m) throws SQLException {
-        if (u instanceof Admin) {
-
-            return this.meetingRoomDao.updateMeetingRoom(m);
-        } else {
-            System.out.println("You are not authorized to create a meeting room");
-            return null;
-        }
-    }
-
-    @Override
-    public Meeting createMeeting(User u, Meeting m) {
+    public Meeting createMeeting(User u, Meeting m) throws AccessDenied {
         if (u instanceof Manager) {
-
-            return this.meetingRoomDao.createMeeting(m);
+            return meetingRoomDao.createMeeting(m);
         } else {
-            System.out.println("You are not authorized to create a meeting room");// thow exception here
-            return null;
+            throw new AccessDenied("Access Denied. This action is only allowed for Managers.");
         }
 
+    }
+
+	@Override
+	public void addManager(Manager m) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'addManager'");
+	}
+
+	@Override
+	public void addAdmin(Admin a) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'addAdmin'");
+	}
+
+    @Override
+    public List<Meeting> getAllMeetingsForUser(User u) {
+        return null;
+    }
+
+    @Override
+    public List<Meeting> getAllMeetingForManager(Manager m) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingForManager'");
+    }
+
+    @Override
+    public MeetingRoom getMeetingRoomByName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMeetingRoomByName'");
+    }
+
+    @Override
+    public Meeting getMeetingById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMeetingById'");
+    }
+
+    @Override
+    public List<Amenity> getAllAmenities() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllAmenities'");
+    }
+
+    @Override
+    public Amenity getAmenityByName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAmenityByName'");
+    }
+
+    @Override
+    public void addAmenityToMeeting(Amenity a, Meeting m) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addAmenityToMeeting'");
     }
 }

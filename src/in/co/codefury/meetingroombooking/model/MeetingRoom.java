@@ -20,6 +20,14 @@ public class MeetingRoom {
         this.amenities = amenities;
         this.perHourCost = perHourCost;
     }
+      public MeetingRoom(String name, int capacity, double creditsPerHour, double ratings,
+            double perHourCost) {
+        this.name = name;
+        this.capacity = capacity;
+        this.creditsPerHour = creditsPerHour;
+        this.ratings = ratings;
+        this.perHourCost = perHourCost;
+    }
 
     public String getName() {
         return name;

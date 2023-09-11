@@ -1,7 +1,7 @@
 package in.co.codefury.meetingroombooking.model;
 
 public class Admin extends User{
-    
+
     public Admin(int id, String name, String email, String password, String phone, double credits, int role) {
         super(id, name, email, password, phone );
         

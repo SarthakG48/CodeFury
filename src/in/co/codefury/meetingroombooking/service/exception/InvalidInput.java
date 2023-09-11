@@ -1,4 +1,4 @@
-package in.co.codefury.meetingroombooking.exception;
+package in.co.codefury.meetingroombooking.service.exception;
 
 
 //e.g. invalid input

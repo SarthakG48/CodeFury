@@ -1,4 +1,4 @@
-package in.co.codefury.meetingroombooking.exception;
+package in.co.codefury.meetingroombooking.service.exception;
 
 public class MeetingRoomAlreadyBooked extends Exception{
     private String message;
