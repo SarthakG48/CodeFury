@@ -2,6 +2,7 @@ package in.co.codefury.meetingroombooking.dao;
 
 import java.sql.SQLException;
 
+import in.co.codefury.meetingroombooking.model.Meeting;
 import in.co.codefury.meetingroombooking.model.MeetingRoom;
 import in.co.codefury.meetingroombooking.model.User;
 

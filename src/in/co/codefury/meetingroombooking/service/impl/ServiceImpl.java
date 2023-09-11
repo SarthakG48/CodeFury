@@ -1,7 +1,5 @@
 package in.co.codefury.meetingroombooking.service.impl;
 
-
-
 import java.sql.SQLException;
 
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
@@ -21,7 +19,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public void addUser(User u) {
-       
+
         try {
             this.meetingRoomDao.save(u);
         } catch (SQLException e) {
@@ -31,48 +29,44 @@ public class ServiceImpl implements Service {
 
     @Override
     public void printAllUsers() {
-       try {
-        this.meetingRoomDao.printAllUsers();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    }
-
-    @Override
-    public MeetingRoom createMeetingRoom(User u,MeetingRoom m) throws SQLException {
-       if(u instanceof Admin){
-              
-              return this.meetingRoomDao.createMeetingRoom(m);
-         }
-         else{
-              System.out.println("You are not authorized to create a meeting room");
-              return null;
-       }
-    }
-
-     @Override
-    public MeetingRoom updateMeetingRoom(User u,MeetingRoom m) throws SQLException {
-       if(u instanceof Admin){
-              
-              return this.meetingRoomDao.updateMeetingRoom(m);
-         }
-         else{
-              System.out.println("You are not authorized to create a meeting room");
-              return null;
-       }
+        try {
+            this.meetingRoomDao.printAllUsers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Meeting createMeeting(User u,Meeting m){
-        if(u instanceof Manager){
-              
-              return this.meetingRoomDao.createMeeting(m);
-         }
-         else{
-              System.out.println("You are not authorized to create a meeting room");
-              return null;
+    public MeetingRoom createMeetingRoom(User u, MeetingRoom m) throws SQLException {
+        if (u instanceof Admin) {
+
+            return this.meetingRoomDao.createMeetingRoom(m);
+        } else {
+            System.out.println("You are not authorized to create a meeting room");
+            return null;
+        }
     }
-    
 
+    @Override
+    public MeetingRoom updateMeetingRoom(User u, MeetingRoom m) throws SQLException {
+        if (u instanceof Admin) {
 
+            return this.meetingRoomDao.updateMeetingRoom(m);
+        } else {
+            System.out.println("You are not authorized to create a meeting room");
+            return null;
+        }
+    }
+
+    @Override
+    public Meeting createMeeting(User u, Meeting m) {
+        if (u instanceof Manager) {
+
+            return this.meetingRoomDao.createMeeting(m);
+        } else {
+            System.out.println("You are not authorized to create a meeting room");// thow exception here
+            return null;
+        }
+
+    }
 }

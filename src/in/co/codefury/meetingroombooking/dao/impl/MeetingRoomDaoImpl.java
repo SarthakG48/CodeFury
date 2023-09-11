@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
+import in.co.codefury.meetingroombooking.model.Meeting;
 import in.co.codefury.meetingroombooking.model.MeetingRoom;
 import in.co.codefury.meetingroombooking.model.User;
 
