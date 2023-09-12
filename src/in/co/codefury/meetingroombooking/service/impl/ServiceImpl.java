@@ -112,4 +112,16 @@ public class ServiceImpl implements Service {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addAmenityToMeeting'");
     }
+
+    @Override
+    public List<MeetingRoom> getAllMeetingRoom() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingRoom'");
+    }
+
+    @Override
+    public User getUserById(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUserById'");
+    }
 }
