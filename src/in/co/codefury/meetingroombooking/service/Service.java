@@ -16,6 +16,8 @@ public interface Service {
     public void addManager(Manager m);
     public void addAdmin(Admin a);
     public void printAllUsers();
+    public List<MeetingRoom> getAllMeetingRoom();
+    public User getUserById(int id);
     public List<Meeting> getAllMeetingsForUser(User u);
     public List<Meeting> getAllMeetingForManager(Manager m);
     public MeetingRoom getMeetingRoomByName(String name);
