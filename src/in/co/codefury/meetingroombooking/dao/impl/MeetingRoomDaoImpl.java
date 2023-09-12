@@ -15,6 +15,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
+import in.co.codefury.meetingroombooking.model.Amenity;
+import in.co.codefury.meetingroombooking.model.Manager;
 import in.co.codefury.meetingroombooking.model.Meeting;
 import in.co.codefury.meetingroombooking.model.MeetingRoom;
 import in.co.codefury.meetingroombooking.model.User;
@@ -182,6 +184,42 @@ public class MeetingRoomDaoImpl implements MeetingRoomDao, AutoCloseable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Meeting> getAllMeetingsForUser(User u) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingsForUser'");
+	}
+
+	@Override
+	public List<Meeting> getAllMeetingsForManager(Manager m) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingsForManager'");
+	}
+
+	@Override
+	public Meeting getMeetingById(int id) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getMeetingById'");
+	}
+
+	@Override
+	public List<Amenity> getAllAmenities() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getAllAmenities'");
+	}
+
+	@Override
+	public Amenity getAmenityByName(String name) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getAmenityByName'");
+	}
+
+	@Override
+	public void addAmenityToMeeting(Amenity a, Meeting m) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'addAmenityToMeeting'");
 	}
 
 

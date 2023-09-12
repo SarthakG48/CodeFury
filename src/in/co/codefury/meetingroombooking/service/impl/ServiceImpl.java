@@ -74,54 +74,46 @@ public class ServiceImpl implements Service {
 
     @Override
     public List<Meeting> getAllMeetingsForUser(User u) {
-        return null;
+        return meetingRoomDao.getAllMeetingsForUser(u);
     }
 
     @Override
     public List<Meeting> getAllMeetingForManager(Manager m) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingForManager'");
+        return meetingRoomDao.getAllMeetingsForManager(m);
     }
 
     @Override
     public MeetingRoom getMeetingRoomByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMeetingRoomByName'");
+        return meetingRoomDao.getMeetingRoomByName(name);
     }
 
     @Override
     public Meeting getMeetingById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMeetingById'");
+        return meetingRoomDao.getMeetingById(id);    
     }
 
     @Override
     public List<Amenity> getAllAmenities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllAmenities'");
+        return meetingRoomDao.getAllAmenities();
     }
 
     @Override
     public Amenity getAmenityByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAmenityByName'");
+        return meetingRoomDao.getAmenityByName(name);
     }
 
     @Override
     public void addAmenityToMeeting(Amenity a, Meeting m) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAmenityToMeeting'");
+        meetingRoomDao.addAmenityToMeeting(a, m);
     }
 
     @Override
     public List<MeetingRoom> getAllMeetingRoom() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingRoom'");
+        return meetingRoomDao.getAllMeetingRooms();
     }
 
     @Override
     public User getUserById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserById'");
+        return meetingRoomDao.getUserById(id);
     }
 }
