@@ -5,7 +5,7 @@ import java.util.List;
 
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
 import in.co.codefury.meetingroombooking.service.Service;
-import in.co.codefury.meetingroombooking.service.exception.AccessDenied;
+import in.co.codefury.meetingroombooking.service.exception.AccessDeniedException;
 import in.co.codefury.meetingroombooking.model.Admin;
 import in.co.codefury.meetingroombooking.model.Amenity;
 import in.co.codefury.meetingroombooking.model.Meeting;
@@ -32,30 +32,30 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public MeetingRoom createMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDenied {
+    public MeetingRoom createMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDeniedException {
         if (u instanceof Admin) {
             return meetingRoomDao.createMeetingRoom(m);
         } else {
-            throw new AccessDenied("Access Denied. This action is only allowed for Admins.");
+            throw new AccessDeniedException("Access Denied. This action is only allowed for Admins.");
         }
     }
 
     @Override
-    public MeetingRoom updateMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDenied {
+    public MeetingRoom updateMeetingRoom(User u, MeetingRoom m) throws SQLException, AccessDeniedException {
         if (u instanceof Admin) {
 
             return meetingRoomDao.updateMeetingRoom(m);
         } else {
-            throw new AccessDenied("Access Denied. This action is only allowed for Admins.");
+            throw new AccessDeniedException("Access Denied. This action is only allowed for Admins.");
         }
     }
 
     @Override
-    public Meeting createMeeting(User u, Meeting m) throws AccessDenied {
+    public Meeting createMeeting(User u, Meeting m) throws AccessDeniedException {
         if (u instanceof Manager) {
             return meetingRoomDao.createMeeting(m);
         } else {
-            throw new AccessDenied("Access Denied. This action is only allowed for Managers.");
+            throw new AccessDeniedException("Access Denied. This action is only allowed for Managers.");
         }
 
     }

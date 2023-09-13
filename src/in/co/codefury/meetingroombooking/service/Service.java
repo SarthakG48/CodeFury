@@ -3,7 +3,7 @@ package in.co.codefury.meetingroombooking.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import in.co.codefury.meetingroombooking.service.exception.AccessDenied;
+import in.co.codefury.meetingroombooking.service.exception.AccessDeniedException;
 import in.co.codefury.meetingroombooking.model.Admin;
 import in.co.codefury.meetingroombooking.model.Amenity;
 import in.co.codefury.meetingroombooking.model.Manager;
@@ -24,8 +24,8 @@ public interface Service {
     public Meeting getMeetingById(int id);
     public List<Amenity> getAllAmenities();
     public Amenity getAmenityByName(String name);
-    public MeetingRoom createMeetingRoom(User u,MeetingRoom m) throws SQLException,AccessDenied;//add exception user not authorized
-    public MeetingRoom updateMeetingRoom(User u,MeetingRoom m) throws SQLException ,AccessDenied;//add exception user not authorized
-    public Meeting createMeeting(User u, Meeting m) throws AccessDenied ;//add exception user not authorized
+    public MeetingRoom createMeetingRoom(User u,MeetingRoom m) throws SQLException,AccessDeniedException;//add exception user not authorized
+    public MeetingRoom updateMeetingRoom(User u,MeetingRoom m) throws SQLException ,AccessDeniedException;//add exception user not authorized
+    public Meeting createMeeting(User u, Meeting m) throws AccessDeniedException ;//add exception user not authorized
     public void addAmenityToMeeting(Amenity a, Meeting m);
 }
