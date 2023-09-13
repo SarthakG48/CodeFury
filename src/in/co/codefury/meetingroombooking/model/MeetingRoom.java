@@ -3,6 +3,7 @@ package in.co.codefury.meetingroombooking.model;
 import java.util.Set;
 
 public class MeetingRoom {
+    private int id;//db purpose
     private String name;//unique
     private int capacity;
     private double creditsPerHour;
@@ -11,8 +12,9 @@ public class MeetingRoom {
     private double perHourCost;
 
     //can only be added by admin
-    public MeetingRoom(String name, int capacity, double creditsPerHour, double ratings, Set<Amenity> amenities,
+    public MeetingRoom(int id,String name, int capacity, double creditsPerHour, double ratings, Set<Amenity> amenities,
             double perHourCost) {
+        this.id=id;
         this.name = name;
         this.capacity = capacity;
         this.creditsPerHour = creditsPerHour;
@@ -28,6 +30,10 @@ public class MeetingRoom {
         this.ratings = ratings;
         this.perHourCost = perHourCost;
     }
+    public int getId() {
+        return id;
+    }
+  
 
     public String getName() {
         return name;

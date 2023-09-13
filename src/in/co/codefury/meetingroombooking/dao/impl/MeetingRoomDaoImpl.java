@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.swing.event.SwingPropertyChangeSupport;
+
 import in.co.codefury.meetingroombooking.dao.MeetingRoomDao;
 import in.co.codefury.meetingroombooking.model.Amenity;
 import in.co.codefury.meetingroombooking.model.Manager;
@@ -78,26 +80,83 @@ public class MeetingRoomDaoImpl implements MeetingRoomDao, AutoCloseable {
 
 
 	@Override
-	public MeetingRoom createMeetingRoom(MeetingRoom m) {
-		// save it in db
+	public MeetingRoom createMeetingRoom(MeetingRoom m)throws SQLException {
+		String query = p.getProperty("sql.createMeetingRoom");
+		pstmt = con.prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+
+		pstmt.setString(1, m.getName());
+		pstmt.setInt(2, m.getCapacity());
+		pstmt.setDouble(3, m.getCreditsPerHour());
+		pstmt.setDouble(4, m.getRatings());
+		pstmt.setDouble(5, m.getPerHourCost());
+		int numberOfRows=pstmt.executeUpdate();
+		if(numberOfRows>0) {
+			return m;
+		}
+
 		return null;
 	}
 
 	@Override
-	public MeetingRoom updateMeetingRoom(MeetingRoom m) {
-		// save it in db
+	public MeetingRoom updateMeetingRoom(MeetingRoom m)throws SQLException {
+		String query = p.getProperty("sql.updateMeetingRoom");
+		pstmt = con.prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+
+		pstmt.setString(1, m.getName());
+		pstmt.setInt(2, m.getCapacity());
+		pstmt.setDouble(3, m.getCreditsPerHour());
+		pstmt.setDouble(4, m.getRatings());
+		pstmt.setDouble(5, m.getPerHourCost());
+		int numberOfRows=pstmt.executeUpdate();
+		if(numberOfRows>0) {
+			return m;
+		}
+
 		return null;
 	}
 
 	@Override
-	public Meeting createMeeting(Meeting m) {
-		// save in db
+	public Meeting createMeeting(Meeting m,int userId,int type)throws SQLException {
+		String query = p.getProperty("sql.createMeeting");
+		pstmt = con.prepareStatement(query);
+		
+		pstmt.setInt(1, m.getId());
+		pstmt.setString(2, m.getTitle());
+		pstmt.setInt(3, userId);
+		pstmt.setDate(4, m.getMeetingDate());
+		pstmt.setTime(5, m.getStartTime());
+		pstmt.setTime(6, m.getEndTime());
+		pstmt.setString(7, m.getMeetingRoom().getName());
+		pstmt.setInt(8, type);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			Meeting meet=new Meeting(rs.getInt(1), rs.getString(2), getUserById(rs.getInt(3)), rs.getDate(4), rs.getTime(5), rs.getTime(6), null, getMeetingRoomByName(rs.getString(7)));
+			return meet;
+		}
+
 		return null;
 	}
 
 	@Override
-	public Meeting updateMeeting(Meeting m) {
-		// save in db
+	public Meeting updateMeeting(Meeting m,int type) throws SQLException{
+		String query = p.getProperty("sql.updateMeeting");
+		pstmt = con.prepareStatement(query);
+		
+		
+		pstmt.setString(2, m.getTitle());
+		pstmt.setDate(4, m.getMeetingDate());
+		pstmt.setTime(5, m.getStartTime());
+		pstmt.setTime(6, m.getEndTime());
+		pstmt.setString(7, m.getMeetingRoom().getName());
+		pstmt.setInt(8, type);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			Meeting meet=new Meeting(rs.getInt(1), rs.getString(2), getUserById(rs.getInt(3)), rs.getDate(4), rs.getTime(5), rs.getTime(6), null, getMeetingRoomByName(rs.getString(7)));
+			return meet;
+		}
+
 		return null;
 	}
 
@@ -135,7 +194,10 @@ public class MeetingRoomDaoImpl implements MeetingRoomDao, AutoCloseable {
 
 			List<Meeting>meetings=new ArrayList<Meeting>();
 			while (rs.next()) {
+				//cannot use join as foreign key is meeting room name
 				User u=getUserById(rs.getInt(3));
+
+				//join can be used here
 				MeetingRoom room=getMeetingRoomByName(rs.getString(7));
 				Set<User> participants=new HashSet<User>();
 				
@@ -187,39 +249,101 @@ public class MeetingRoomDaoImpl implements MeetingRoomDao, AutoCloseable {
 	}
 
 	@Override
-	public List<Meeting> getAllMeetingsForUser(User u) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingsForUser'");
+	public List<Meeting> getAllMeetingsForUser(User u)throws SQLException {
+		String query = p.getProperty("sql.selectAllMeetingsForParticipant");
+		pstmt = con.prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		
+		List<Meeting>meetings=new ArrayList<Meeting>();
+		while (rs.next()) {
+			Meeting m=getMeetingById(rs.getInt(1));
+			meetings.add(m);
+		}
+		return meetings;
 	}
 
 	@Override
-	public List<Meeting> getAllMeetingsForManager(Manager m) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAllMeetingsForManager'");
+	public List<Meeting> getAllMeetingsForManager(Manager m) throws SQLException{
+		
+		String query = p.getProperty("sql.selectMeetingsForManager");
+		pstmt = con.prepareStatement(query);
+
+		ResultSet rs = pstmt.executeQuery();
+		
+		List<Meeting>meetings=new ArrayList<Meeting>();
+		while (rs.next()) {
+			Meeting meet=getMeetingById(rs.getInt(1));
+			meetings.add(meet);
+		}
+		return meetings;
 	}
 
 	@Override
-	public Meeting getMeetingById(int id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getMeetingById'");
+	public Meeting getMeetingById(int id) throws SQLException {
+		try {
+			String query = p.getProperty("sql.selectMeetingById");
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Meeting m=new Meeting(rs.getInt(1), rs.getString(2), getUserById(rs.getInt(3)), rs.getDate(4), rs.getTime(5), rs.getTime(6), null, getMeetingRoomByName(rs.getString(7)));
+				return m;
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 
 	@Override
-	public List<Amenity> getAllAmenities() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAllAmenities'");
+	public List<Amenity> getAllAmenities() throws SQLException{
+		String query = p.getProperty("sql.selectAllAmenities");
+		pstmt = con.prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		
+		List<Amenity>amenities=new ArrayList<Amenity>();
+		while (rs.next()) {
+			Amenity a=new Amenity(rs.getString(1), rs.getDouble(2));
+			amenities.add(a);
+		}
+		return amenities;
 	}
 
 	@Override
-	public Amenity getAmenityByName(String name) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getAmenityByName'");
+	public Amenity getAmenityByName(String name) throws SQLException{
+		String query = p.getProperty("sql.selectAmenityByName");
+		pstmt = con.prepareStatement(query);
+		pstmt.setString(1, name);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			Amenity a=new Amenity(rs.getString(1), rs.getDouble(2));
+			return a;
+		}
+		return null;
 	}
-
+		
+	
+	//reduce manager's credit here only
 	@Override
-	public void addAmenityToMeeting(Amenity a, Meeting m) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'addAmenityToMeeting'");
+	public void addAmenityToMeeting(Amenity a, Meeting m) throws SQLException{
+		
+		String query = p.getProperty("sql.addAmenityToMeeting");
+		pstmt = con.prepareStatement(query);
+		pstmt.setString(1, a.getName());
+		pstmt.setDouble(2, a.getCreditsRequiredToAdd());
+		int rowsAffected=pstmt.executeUpdate();
+		if(rowsAffected>0) {
+			System.out.println("Amenity added");
+			//reduce manager's credit here only
+			//reduceManagerCredits(m.getMeetingRoom().getPerHourCost());
+		}
+		else {
+			System.out.println("Insufficient credits");//throw exception here
+		}
+
+
 	}
 
 
