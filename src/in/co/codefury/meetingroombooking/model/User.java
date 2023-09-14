@@ -2,7 +2,6 @@ package in.co.codefury.meetingroombooking.model;
 
 import java.util.Date;
 
-import com.google.gson.Gson;
 
 /**
  * User
@@ -74,11 +73,6 @@ public class User {
     }
 
    
-    public String getDataOfUser(){
-        Gson gson=new Gson();
-        return gson.toJson(this);
-        
-        //return "name: "+name+" email: "+email+" lastLoggedIn: "+lastLoggin;
-    }
+  
 
 }
